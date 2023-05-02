@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Gym stats</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{url_for('static',filename='/scripts/dashboard.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='/styles/dashboard.css')}}" />
+
+</head>
+<body>
+    <header>
+            <h1 style="text-align: center">Dashboard</h1>
+            <a href="{{url_for('createExercise')}}">Add an exercise</a>
+    </header>
+    <div>
+        <h2>Bodyweight</h2>
+        <div class="bodyweightChart-div">
+  <canvas id="bodyweightChart-week"></canvas>
+</div><div class="bodyweightChart-div">
+  <canvas id="bodyweightChart-year"></canvas>
+    </div>
+    </div>
+    <h2>Exercises</h2>
+    <div id="exercises">
+
+    </div>
+
+<script>
+
+</script>
+</body>
+</html>

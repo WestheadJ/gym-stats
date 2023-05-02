@@ -1,13 +1,16 @@
 from __future__ import print_function
 
-import os.path
+import os
 import datetime
+import sqlite3
+import pendulum
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -32,30 +35,92 @@ if not creds or not creds.valid:
     with open('token.json', 'w') as token:
         token.write(creds.to_json())
 
+con = sqlite3.connect("stats.db")
+db = con.cursor()
+
+service = build('sheets', 'v4', credentials=creds)
+
+# Call the Sheets API
+sheet = service.spreadsheets()
+db.execute("SELECT * FROM Bodyweight")
+
+rows = db.fetchall()
+
+print(rows)
+
+def getBodyWeight(date):
+    range = f"{date.strftime('%a')}!B7"
+
+
+    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range).execute()
+    value = result.get('values', [])[0][0]
+    print(value)
+    date = date.strftime('%Y/%m/%d')
+    print(date)
+    if value[0] == '-':
+        value=0
+    print(value)
+    sql = """INSERT INTO Bodyweight(date,weight) VALUES (?,?)"""
+    db.execute(sql,[date,value])
+    con.commit()
+
+x = datetime.datetime.now()
+
+# day=x.strftime("%a")
+# year = x.isocalendar().year
+# weekOfTheYear = x.isocalendar().week
+#
+# dateGrab = f"{year}/W{weekOfTheYear}"
+#
+# startDate = datetime.datetime.strptime(dateGrab + '/1', "%Y/W%W/%w")
+#
+# if(weekOfTheYear == 52):
+#     dateGrab = f"{year+1}/W1"
+#     endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
+# else:
+#     endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
+# print(startDate)
+# print(endDate)
+
+bodyweightChecked = False
+
 try:
-    service = build('sheets', 'v4', credentials=creds)
-
-    # Call the Sheets API
-    sheet = service.spreadsheets()
-
 
     ran = False
     while True:
-
         x = datetime.datetime.now()
 
-        day=x.strftime("%a")
+        if(x.strftime('%I:%M')=="12:56"):
+            if bodyweightChecked == False:
+                getBodyWeight(x)
+                bodyweightChecked = True
 
-
-        SAMPLE_RANGE_NAME = ""
-        if(day == "Sat" or day == "Sun"):
-            SAMPLE_RANGE_NAME = f'{day}!A7:B'
         else:
-            SAMPLE_RANGE_NAME = f'{day}!D2:I14'
+            bodyweightChecked = False
 
-        if(x.strftime('%I-%M')== "07-25"):
+        day=x.strftime("%a")
+        year = x.isocalendar().year
+        weekOfTheYear = x.isocalendar().week
+
+        # dateGrab = f"{year}/W{weekOfTheYear}"
+        # startDate = datetime.datetime.strptime(dateGrab + '/1', "%Y/W%W/%w")
+        #
+        # endDate = datetime.datetime.strptime(dateGrab+ '/6',"%Y/W%W/%w")
+        # print(endDate)
+
+        range = ""
+
+        if(day == "Sat" or day == "Sun"):
+            range = f'{day}!A7:B'
+        else:
+            range = f'{day}!D2:I14'
+
+
+        if(x.strftime('%I-%M')== "04-22"):
             if(ran==False):
-                result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME).execute()
+                getBodyWeight(x)
+
+                result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range).execute()
                 values = result.get('values', [])
                 ran = True
                 if not values:
@@ -65,9 +130,11 @@ try:
                     print(i)
             else:
                 pass
-        elif(x.strftime('%I-%M')== "07-26"):
+        elif(x.strftime('%I-%M')== "04-23"):
             ran=False
         else:
             pass
 except HttpError as err:
     print(err)
+
+
