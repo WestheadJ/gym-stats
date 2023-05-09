@@ -66,21 +66,23 @@ def getBodyWeight(date):
 
 x = datetime.datetime.now()
 
-# day=x.strftime("%a")
-# year = x.isocalendar().year
-# weekOfTheYear = x.isocalendar().week
-#
-# dateGrab = f"{year}/W{weekOfTheYear}"
-#
-# startDate = datetime.datetime.strptime(dateGrab + '/1', "%Y/W%W/%w")
-#
-# if(weekOfTheYear == 52):
-#     dateGrab = f"{year+1}/W1"
-#     endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
-# else:
-#     endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
-# print(startDate)
-# print(endDate)
+day=x.strftime("%a")
+year = x.isocalendar().year
+weekOfTheYear = x.isocalendar().week
+
+dateGrab = f"{year}/W{weekOfTheYear}"
+
+print(dateGrab)
+
+startDate = datetime.datetime.strptime(dateGrab + '/1', "%Y/W%W/%w")
+
+if(weekOfTheYear == 52):
+    dateGrab = f"{year+1}/W1"
+    endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
+else:
+    endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
+print(startDate)
+print(endDate)
 
 bodyweightChecked = False
 
@@ -107,33 +109,33 @@ try:
         #
         # endDate = datetime.datetime.strptime(dateGrab+ '/6',"%Y/W%W/%w")
         # print(endDate)
-
-        range = ""
-
-        if(day == "Sat" or day == "Sun"):
-            range = f'{day}!A7:B'
-        else:
-            range = f'{day}!D2:I14'
-
-
-        if(x.strftime('%I-%M')== "04-22"):
-            if(ran==False):
-                getBodyWeight(x)
-
-                result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range).execute()
-                values = result.get('values', [])
-                ran = True
-                if not values:
-                    print('No data found.')
-
-                for i in values:
-                    print(i)
-            else:
-                pass
-        elif(x.strftime('%I-%M')== "04-23"):
-            ran=False
-        else:
-            pass
+        #
+        # range = ""
+        #
+        # if(day == "Sat" or day == "Sun"):
+        #     range = f'{day}!A7:B'
+        # else:
+        #     range = f'{day}!D2:I14'
+        #
+        #
+        # if(x.strftime('%I-%M')== "04-22"):
+        #     if(ran==False):
+        #         getBodyWeight(x)
+        #
+        #         result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range).execute()
+        #         values = result.get('values', [])
+        #         ran = True
+        #         if not values:
+        #             print('No data found.')
+        #
+        #         for i in values:
+        #             print(i)
+        #     else:
+        #         pass
+        # elif(x.strftime('%I-%M')== "04-23"):
+        #     ran=False
+        # else:
+        #     pass
 except HttpError as err:
     print(err)
 
