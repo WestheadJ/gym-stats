@@ -1,3 +1,5 @@
+let week;
+
 window.onload = () => {
 
     fetch("http://127.0.0.1:6001/get/bodyweight/week").then(res => res.json()).then(json => {
@@ -7,6 +9,7 @@ window.onload = () => {
             // labels.push(item[0])
             data.push(item[1])
         })
+
         var canvas = document.getElementById('bodyweightChart-week');
         var ctx = canvas.getContext('2d')
         new Chart(ctx, {
@@ -23,8 +26,10 @@ window.onload = () => {
             },
             "type": "line",
             "options": {
-                scales: {y: {type: 'linear', suggestedMin: 65, max: 100, ticks: {stepSize: 1}}},
+                responsive: true,maintainAspectRatio: false,
+                scales: {y: {type: 'linear', suggestedMin: 65, max: 100, ticks: {stepSize: 5}}},
                 "title": {"text": "Line Chart", "display": true}
+
             }
         });
     })
@@ -37,6 +42,12 @@ window.onload = () => {
             labels.push(item[0])
             data.push(item[1])
         })
+
+        let minValueWeight = Math.min(...data)
+        let maxValueWeight = Math.max(...data)
+        let minValueDate = labels[data.indexOf(minValueWeight)]
+        let maxValueDate = labels[data.indexOf(maxValueWeight)]
+
         var canvas = document.getElementById('bodyweightChart-year');
         var ctx = canvas.getContext('2d')
         new Chart(ctx, {
@@ -53,9 +64,43 @@ window.onload = () => {
             },
             "type": "line",
             "options": {
-                scales: {y: {type: 'linear', suggestedMin: 65, max: 100, ticks: {stepSize: 1}}},
-                "title": {"text": "Line Chart", "display": true}
-            }
+                responsive: true,maintainAspectRatio: false,
+                scales: {y: {type: 'linear', suggestedMin: 70, max: 100, ticks: {stepSize: 5}}},
+                "title": {"text": "Line Chart", "display": true},plugins: {
+                    annotation: {
+                        annotations: {
+                            minLine: {
+                                type: 'line',
+                                yMin: minValueWeight,
+                                yMax: minValueWeight,
+                                borderColor: 'rgb(118,211,19)',
+                                borderWidth: 2, label: {
+                                    content: `Lowest Weight: ${minValueWeight} at ${minValueDate}`,
+                                    font: 14,
+                                    display: true,
+                                    yAdjust: 12,
+                                    backgroundColor: 'rgb(118,211,19)',
+                                    color: 'black'
+                                }
+                            }, maxLine: {
+                                type: 'line',
+                                yMin: maxValueWeight,
+                                yMax: maxValueWeight,
+                                borderColor: 'rgb(155,45,51)',
+                                borderWidth: 2, label: {
+                                    content: `Highest Weight: ${maxValueWeight} at ${maxValueDate}`,
+                                    font: 14,
+                                    display: true,
+                                    yAdjust: -12,
+                                    backgroundColor: 'rgb(155,45,51)',
+                                    color: 'black'
+                                }
+
+                            }
+                        }
+                    }
+                }}
+
         });
 
     })
