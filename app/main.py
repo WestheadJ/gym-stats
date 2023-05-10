@@ -46,7 +46,7 @@ db.execute("SELECT * FROM Bodyweight")
 
 rows = db.fetchall()
 
-print(rows)
+# print(rows)
 
 def getBodyWeight(date):
     range = f"{date.strftime('%a')}!B7"
@@ -64,45 +64,83 @@ def getBodyWeight(date):
     db.execute(sql,[date,value])
     con.commit()
 
-x = datetime.datetime.now()
+# x = datetime.datetime.now()
+#
+# day=x.strftime("%a")
+# year = x.isocalendar().year
+# weekOfTheYear = x.isocalendar().week
 
-day=x.strftime("%a")
-year = x.isocalendar().year
-weekOfTheYear = x.isocalendar().week
+# dateGrab = f"{year}/W{weekOfTheYear}"
+#
+# print(dateGrab)
+#
+# startDate = datetime.datetime.strptime(dateGrab + '/1', "%Y/W%W/%w")
 
-dateGrab = f"{year}/W{weekOfTheYear}"
-
-print(dateGrab)
-
-startDate = datetime.datetime.strptime(dateGrab + '/1', "%Y/W%W/%w")
-
-if(weekOfTheYear == 52):
-    dateGrab = f"{year+1}/W1"
-    endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
-else:
-    endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
-print(startDate)
-print(endDate)
+# if(weekOfTheYear == 52):
+#     dateGrab = f"{year+1}/W1"
+#     endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
+# else:
+#     endDate = datetime.datetime.strptime(dateGrab+ '/0',"%Y/W%W/%w")
+# print(startDate)
+# print(endDate)
 
 bodyweightChecked = False
 
+def getSheet(range):
+    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range).execute()
+    values = result.get('values', [])
+    if not values:
+        print('No data found.')
+    else:
+        for i in values:
+            print(i)
+
 try:
+    x = datetime.datetime.now()
+    print(x)
+    day=x.strftime("%a")
+    date=x.strftime("")
+    match day:
+        case "Mon":
+            monNotRan = True
+            if monNotRan:
+                range = 'Mon!C2:O9'
+                getSheet(range)
+                monNotRan = False
 
-    ran = False
-    while True:
-        x = datetime.datetime.now()
+            else:
+                print("Not time")
+        case "Tue":
+            tueNotRan = True
+            if tueNotRan:
+                range = 'Tue!C2:O8'
+                getSheet(range)
+                tueNotRan = False
+        case "Wed":
+            range = 'Wed!C2:O8'
+            getSheet(range)
+        case "Thu":
+            range = 'Thu!C2:O7'
+            getSheet(range)
+        case "Fri":
+            range = 'Fri!C2:O8'
+            getSheet(range)
 
-        if(x.strftime('%I:%M')=="12:56"):
-            if bodyweightChecked == False:
-                getBodyWeight(x)
-                bodyweightChecked = True
-
-        else:
-            bodyweightChecked = False
-
-        day=x.strftime("%a")
-        year = x.isocalendar().year
-        weekOfTheYear = x.isocalendar().week
+    # ran = False
+    # while True:
+        # x = datetime.datetime.now()
+        #
+        # if(x.strftime('%I:%M')=="12:56"):
+        #     if bodyweightChecked == False:
+        #         getBodyWeight(x)
+        #         bodyweightChecked = True
+        #
+        # else:
+        #     bodyweightChecked = False
+        #
+        # day=x.strftime("%a")
+        # year = x.isocalendar().year
+        # weekOfTheYear = x.isocalendar().week
 
         # dateGrab = f"{year}/W{weekOfTheYear}"
         # startDate = datetime.datetime.strptime(dateGrab + '/1', "%Y/W%W/%w")

@@ -2,7 +2,6 @@ from flask import *
 import sqlite3
 import flask_cors
 import pendulum
-from main import *
 
 app = Flask(__name__)
 
@@ -61,6 +60,15 @@ def getAllExercises():
     con = sqlite3.connect("stats.db")
     db = con.cursor()
     db.execute("SELECT * FROM Exercises")
+    return db.fetchall()
+
+@app.route('/get/exercise')
+@flask_cors.cross_origin()
+def getExercise():
+    args = request.args['id']
+    con = sqlite3.connect("stats.db")
+    db = con.cursor()
+    db.execute(f"SELECT * FROM Exercise_Records WHERE ExerciseID =" +args)
     return db.fetchall()
 
 if __name__ == '__main__':
