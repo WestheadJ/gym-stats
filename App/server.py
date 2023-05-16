@@ -19,6 +19,10 @@ def index():
 def createExercise():
     return render_template("createExercise.html")
 
+@app.route('/add-bodyweight')
+def addBodyweight():
+    return render_template("addBodyweight.html")
+
 # API
 @app.route('/get/bodyweight/week')
 @flask_cors.cross_origin()
@@ -53,6 +57,22 @@ def getBodyweightYear():
     db.execute(f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ?", [startDate, endDate])
     rows = db.fetchall()
     return rows
+
+@app.route("/post/add-bodyweight",methods=['post'])
+@flask_cors.cross_origin()
+def addPostBodyweight():
+    weight = request.form["weight"]
+    con = sqlite3.connect("stats.db")
+    db = con.cursor()
+    dt = pendulum.today().date()
+    db.execute("SELECT * FROM Bodyweight WHERE date = ?",[str(dt)])
+    result = db.fetchall()
+    if result == []:
+        db.execute("INSERT INTO Bodyweight(date,weight) VALUES (?,?)",[str(dt),weight])
+        con.commit()
+        return redirect(url_for('addBodyweight'))
+    else:
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=6001)

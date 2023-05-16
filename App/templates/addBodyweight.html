@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Bodyweight</title>
+</head>
+<body>
+    <h1>Add Today's Bodyweight</h1>
+    <form method="post" action="http://localhost:6001/post/add-bodyweight" >
+        <label for="weight">Weight: <input  type="number" step="0.01" name="weight"/></label>
+        <button type="submit">Add Weight</button>
+    </form>
+
+    <script>
+        function addBodyweight(){
+            fetch("http://localhost:6001/post/add-bodyweight",{method:"post"})
+        }
+    </script>
+</body>
+</html>
