@@ -28,8 +28,8 @@ def getBodyweightWeek():
     db = con.cursor()
     dt = pendulum.today()
 
-    startDate = dt.start_of('week').to_date_string().replace("-", "/")
-    endDate = dt.end_of('week').to_date_string().replace("-", "/")
+    startDate = dt.start_of('week').to_date_string()
+    endDate = dt.end_of('week').to_date_string()
 
     print(startDate, "-", endDate)
 
@@ -45,31 +45,14 @@ def getBodyweightYear():
     dt = pendulum.today()
     year = dt.year
 
-    startDate = f"{year}/01/01"
-    endDate = f"{year}/12/31"
+    startDate = f"{year}-01-01"
+    endDate = f"{year}-12-31"
 
     print(startDate, "-", endDate)
 
     db.execute(f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ?", [startDate, endDate])
     rows = db.fetchall()
     return rows
-
-@app.route('/get/exercise/all')
-@flask_cors.cross_origin()
-def getAllExercises():
-    con = sqlite3.connect("stats.db")
-    db = con.cursor()
-    db.execute("SELECT * FROM Exercises")
-    return db.fetchall()
-
-@app.route('/get/exercise')
-@flask_cors.cross_origin()
-def getExercise():
-    args = request.args['id']
-    con = sqlite3.connect("stats.db")
-    db = con.cursor()
-    db.execute(f"SELECT * FROM Exercise_Records WHERE ExerciseID =" +args)
-    return db.fetchall()
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=6001)

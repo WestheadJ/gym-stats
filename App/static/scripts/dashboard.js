@@ -105,11 +105,12 @@ window.onload = () => {
 
     })
 
-    fetch('http://127.0.0.1:6001/get/exercise/all').then(res=>res.json()).then(res=>{
-        res.forEach(item=>{
-            fetch(`http://127.0.0.1:6001/get/exercise?id=${item[0]}`).then(res=>res.json()).then(res=>{
-                console.log(res)
-            })
-        })
-    })
+    // fetch('http://127.0.0.1:6001/get/exercise/all').then(res=>res.json()).then(res=>{
+    //     res.forEach(item=>{
+    //         // fetch(`http://127.0.0.1:6001/get/exercise?id=${item[0]}`).then(res=>res.json()).then(res=>{
+    //         //     console.log(res)
+    //         // })
+    //
+    //     })
+    // })
 }

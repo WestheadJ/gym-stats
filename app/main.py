@@ -97,7 +97,7 @@ def getSheet(range):
 
 try:
     x = datetime.datetime.now()
-    print(x)
+
     day=x.strftime("%a")
     date=x.strftime("")
     match day:

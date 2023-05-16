@@ -16,8 +16,8 @@
             <a href="{{url_for('createExercise')}}">Add an exercise</a>
     </header>
     <div style="display: flex;align-items: center;flex-direction: column">
-        <h2>Bodyweight</h2>
-        <div class="bodyweightChart-div">
+        <h1>Bodyweight</h1>
+        <div class="chart-div">
   <canvas id="bodyweightChart-week"></canvas>
             <script>
 // https://www.delftstack.com/howto/javascript/javascript-get-week-number/?utm_content=cmp-true
@@ -27,17 +27,88 @@ var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
 var result = Math.ceil(( currentdate.getDay() + 1 + numberOfDays) / 7);
 console.log(`The week number of the current date (${currentdate}) is ${result}.`)
             </script>
-</div><div class="bodyweightChart-div">
+</div><div class="chart-div">
   <canvas id="bodyweightChart-year"></canvas>
     </div>
     </div>
-    <h2>Exercises</h2>
-    <div id="exercises">
+    <h1>Exercises</h1>
+<!--    <div id="exercises">-->
+<!--        <div class="chart-div" id="Cable-Flys">-->
+<!--            <h2>Cable Flys</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Cable-Lat-Raise">-->
+<!--            <h2>Cable Lateral Raises</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="DB Curl">-->
+<!--            <h2>DB Curl</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Flat-DB-Press">-->
+<!--            <h2>Flat DB Press</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Hack-Squat-(Glutes&Hams)">-->
+<!--            <h2>Hack Squat - Glutes & Hamstrings</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Hack-Squat=(Quads)">-->
+<!--            <h2>Hack Squat - Quads</h2>-->
+<!--        </div>-->
 
-    </div>
-
-<script>
-
-</script>
+<!--        <div class="chart-div" id="Lat-Row">-->
+<!--            <h2>Lower Lat Row</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Laying-Hamstring-Curls">-->
+<!--            <h2>Laying Hamstring Curl</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Leg Extensions">-->
+<!--            <h2>Leg Extensions</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Leg-Press-(Adductors)">-->
+<!--            <h2>Leg Press - Adductors</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Leg-Press-(Glutes)">-->
+<!--            <h2>Leg Press - Glutes</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Overhead-Tricep-Extension-(single-arm)">-->
+<!--            <h2>Overhead Single Arm Tricep Extensions</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Pec-Dec">-->
+<!--            <h2>Pec Dec</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Preacher-Curl">-->
+<!--            <h2>Preacher Curl</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="RDLs">-->
+<!--            <h2>RDLs</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Rear-Delt-Row">-->
+<!--            <h2>Rear Delt Row</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Seated-Calf-Raise">-->
+<!--            <h2>Seated Calf Raise</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Seated-Hamstring-Curl">-->
+<!--            <h2>Seated Hamstring Curl/Leg Curl</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Smith-Hack-Squat-(Glutes&Hams)">-->
+<!--            <h2>Smith Machine Hack Squats - Glutes & Hamstrings</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Smith-Hack-Squat-(Quads)">-->
+<!--            <h2>Smith Machine Hack Squats - Quads</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Smith-Incline-Chest-Press">-->
+<!--            <h2>Incline Smith Press </h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Smith-Shoulder-Press">-->
+<!--            <h2>Smith Shoulder Press</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Smith-Standing-Calf-Raise">-->
+<!--            <h2>Smith Standing Calf Raise</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Tricep-Pushdown-(single-arm)">-->
+<!--            <h2>Single Arm Tricep Pushdown</h2>-->
+<!--        </div>-->
+<!--        <div class="chart-div" id="Upper Back Pulldown">-->
+<!--            <h2>Upper Back Pulldown</h2>-->
+<!--        </div>-->
+<!--    </div>-->
 </body>
 </html>
