@@ -15,13 +15,14 @@ flask = flask_cors.CORS(app)
 def index():
     return render_template("index.html")
 
-@app.route('/create-exercise')
-def createExercise():
-    return render_template("createExercise.html")
 
 @app.route('/add-bodyweight')
 def addBodyweight():
     return render_template("addBodyweight.html")
+
+@app.route('/record-session')
+def recordSession():
+    return render_template("recordSession.html")
 
 # API
 @app.route('/get/bodyweight/week')
