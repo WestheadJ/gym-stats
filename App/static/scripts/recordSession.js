@@ -1,29 +1,46 @@
 const dt = new Date()
 let day = dt.getDay()
 
+let monday = [["Smith Hack Squat (Quads)",3],["Laying Hamstring Curl",3],["Leg Extensions",4],["Leg Press (Calfs)",4],["Leg Press (Adductors",3]]
+let tuesday = [["Pec Deck",3],["Smith Incline Chest Press",3],["Flat DB Press",2],["Upper Back Pulldown",2],["Lat Row",2],["Rear Delt Row",2]]
+let wednesday = [["Laying Hamstring Curl",3],["Leg Press (Glutes)",3],["Smith Hack Squats (Glutes & Hams)",2],["Leg Press (Calves)",3],["Leg Extensions",3]]
+let thursday = [["Smith Shoulder Press",3],["Cable Lat Raise",3],["Tricep Pushdown (Single Arm)",3],["Behind Cable Curls",2],["Overhead Tricep Extensions (Single Arm)",2],["Preacher Curl",2]]
+let friday = [["Leg Press (Glutes)",3],["RDLs",2],["Leg Extensions",3],["Leg Press (Calf Raises)",2],["Laying Hamstring Curl",2]]
+
+function addExerciseToPage(form,exercise,sets){
+    let container = document.createElement("div")
+    
+}
+
 window.onload = () =>{
     const form = document.getElementById("record-form")
 
     if(day === 1){
-        let container = document.createElement("div")
-        container.setAttribute("id","smith-hack-squat-container")
-        form.appendChild(container)
-
-        let smithHackSmithContainer = document.getElementById("smith-hack-squat-container")
-        let h3 = document.createElement("h3")
-        h3.innerText = "Smith Hack Squat"
-        smithHackSmithContainer.appendChild(h3)
+        monday.forEach(item=>{
+            console.log(item)
+        })
+        // let container = document.createElement("div")
+        // container.setAttribute("id","smith-hack-squat-container")
+        // form.appendChild(container)
+        //
+        // let smithHackSmithContainer = document.getElementById("smith-hack-squat-container")
+        // let h3 = document.createElement("h3")
+        // h3.innerText = "Smith Hack Squat"
+        // smithHackSmithContainer.appendChild(h3)
 
     }
     else if(day===2){
-        let container = document.createElement("div")
-        container.setAttribute("id","pec-deck-container")
-        form.appendChild(container)
-
-        let smithHackSmithContainer = document.getElementById("pec-deck-container")
-        let h3 = document.createElement("h3")
-        h3.innerText = "Pec Deck"
-        smithHackSmithContainer.appendChild(h3)
+        tuesday.forEach(item=>{
+            addExerciseToPage(form,item[0],item[1])
+        })
+        // let container = document.createElement("div")
+        // container.setAttribute("id","pec-deck-container")
+        // form.appendChild(container)
+        //
+        // let smithHackSmithContainer = document.getElementById("pec-deck-container")
+        // let h3 = document.createElement("h3")
+        // h3.innerText = "Pec Deck"
+        // smithHackSmithContainer.appendChild(h3)
     }
     else if(day===3){
         let container = document.createElement("div")

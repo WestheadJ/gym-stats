@@ -12,15 +12,20 @@ flask = flask_cors.CORS(app)
 
 # Pages
 @app.route('/')
+@flask_cors.cross_origin()
+
 def index():
     return render_template("index.html")
 
 
 @app.route('/add-bodyweight')
+@flask_cors.cross_origin()
+
 def addBodyweight():
     return render_template("addBodyweight.html")
 
 @app.route('/record-session')
+@flask_cors.cross_origin()
 def recordSession():
     return render_template("recordSession.html")
 
