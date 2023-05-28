@@ -5,9 +5,13 @@ import pendulum
 
 app = Flask(__name__)
 
-
 flask = flask_cors.CORS(app)
 
+monday = [["Smith Hack Squat (Quads)",3],["Laying Hamstring Curl",3],["Leg Extensions",4],["Leg Press (Calfs)",4],["Leg Press (Adductors",3]]
+tuesday = [["Pec Deck",3],["Smith Incline Chest Press",3],["Flat DB Press",2],["Upper Back Pulldown",2],["Lat Row",2],["Rear Delt Row",2]]
+wednesday = [["Laying Hamstring Curl",3],["Leg Press (Glutes)",3],["Smith Hack Squats (Glutes & Hams)",2],["Leg Press (Calves)",3],["Leg Extensions",3]]
+thursday = [["Smith Shoulder Press",3],["Cable Lat Raise",3],["Tricep Pushdown (Single Arm)",3],["Behind Cable Curls",2],["Overhead Tricep Extensions (Single Arm)",2],["Preacher Curl",2]]
+friday = [["Leg Press (Glutes)",3],["RDLs",2],["Leg Extensions",3],["Leg Press (Calf Raises)",2],["Laying Hamstring Curl",2]]
 
 
 # Pages
@@ -67,6 +71,7 @@ def getBodyweightYear():
 @app.route("/post/add-bodyweight",methods=['post'])
 @flask_cors.cross_origin()
 def addPostBodyweight():
+
     weight = request.form["weight"]
     con = sqlite3.connect("stats.db")
     db = con.cursor()
