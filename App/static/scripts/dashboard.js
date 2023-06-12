@@ -4,7 +4,7 @@ window.onload = () => {
 
     fetch("http://127.0.0.1:6001/get/bodyweight/week").then(res => res.json()).then(json => {
         let data = []
-        let labels = ['Mon', "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ]
+        let labels = ['Mon', "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         json.forEach(item => {
             // labels.push(item[0])
             data.push(item[1])
@@ -26,9 +26,9 @@ window.onload = () => {
             },
             "type": "line",
             "options": {
-                responsive: true,maintainAspectRatio: false,
-                scales: {y: {type: 'linear', suggestedMin: 65, max: 100, ticks: {stepSize: 5}}},
-                "title": {"text": "Line Chart", "display": true}
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { type: 'linear', suggestedMin: 65, max: 100, ticks: { stepSize: 5 } } },
+                "title": { "text": "Line Chart", "display": true }
 
             }
         });
@@ -64,9 +64,9 @@ window.onload = () => {
             },
             "type": "line",
             "options": {
-                responsive: true,maintainAspectRatio: false,
-                scales: {y: {type: 'linear', suggestedMin: 70, max: 100, ticks: {stepSize: 5}}},
-                "title": {"text": "Line Chart", "display": true},plugins: {
+                responsive: true, maintainAspectRatio: false,
+                scales: { y: { type: 'linear', suggestedMin: 70, max: 100, ticks: { stepSize: 5 } } },
+                "title": { "text": "Line Chart", "display": true }, plugins: {
                     annotation: {
                         annotations: {
                             minLine: {
@@ -99,18 +99,37 @@ window.onload = () => {
                             }
                         }
                     }
-                }}
+                }
+            }
 
         });
 
     })
 
-    // fetch('http://127.0.0.1:6001/get/exercise/all').then(res=>res.json()).then(res=>{
-    //     res.forEach(item=>{
-    //         // fetch(`http://127.0.0.1:6001/get/exercise?id=${item[0]}`).then(res=>res.json()).then(res=>{
-    //         //     console.log(res)
-    //         // })
-    //
-    //     })
-    // })
+    function isPositive(num) {
+        return (num > 0);
+    }
+
+    fetch('http://127.0.0.1:6001/get/percentage').then(res => res.json()).then(res => {
+        const yesterday = res[1][1]
+        const today = res[0][1]
+
+        const difference = yesterday - today
+        const percentage = document.getElementById("percentage")
+
+        if (isPositive(difference) || difference === 0) {
+            percentage.innerText = `%${((difference / yesterday) * 100).toFixed(2)}`
+            percentage.style.color = "red"
+
+        }
+
+        else {
+            percentage.innerText = `%${((difference / yesterday) * 100).toFixed(2)}`
+            percentage.style.color = "green"
+
+        }
+
+    })
+
+
 }

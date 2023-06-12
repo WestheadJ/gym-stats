@@ -68,6 +68,20 @@ def getBodyweightYear():
     rows = db.fetchall()
     return rows
 
+@app.route('/get/percentage')
+@flask_cors.cross_origin()
+def getPercentage():
+    con = sqlite3.connect("stats.db")
+    db = con.cursor()
+    today = pendulum.now().to_date_string()
+    yesterday = pendulum.now().subtract(days=1).to_date_string()
+
+    db.execute(f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ?",[yesterday,today])
+    rows = db.fetchall()
+
+    return rows
+
+
 @app.route("/post/add-bodyweight",methods=['post'])
 @flask_cors.cross_origin()
 def addPostBodyweight():
