@@ -29,7 +29,6 @@ window.onload = () => {
                 responsive: true, maintainAspectRatio: false,
                 scales: { y: { type: 'linear', suggestedMin: 65, max: 100, ticks: { stepSize: 5 } } },
                 "title": { "text": "Line Chart", "display": true }
-
             }
         });
     })
