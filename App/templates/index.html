@@ -12,28 +12,21 @@
 </head>
 <body>
     <header>
-            <h1 style="text-align: center">Dashboard</h1>
-            <a href="{{url_for('addBodyweight')}}">Add Bodyweight For Today</a>
-            <a href="{{url_for('recordSession')}}">Record a Session</a>
+        <h1 style="text-align: center">Dashboard</h1>
+        <a href="{{url_for('addBodyweight')}}">Add Bodyweight</a>
     </header>
     <div style="display: flex;align-items: center;flex-direction: column">
         <h1>Bodyweight </h1>
         <h3>Percentage Increase/Decrease: <span id="percentage"></span></h3>
         <div class="chart-div">
-  <canvas id="bodyweightChart-week"></canvas>
-            <script>
-// https://www.delftstack.com/howto/javascript/javascript-get-week-number/?utm_content=cmp-true
-                currentdate = new Date();
-                var oneJan = new Date(currentdate.getFullYear(),0,1);
-var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
-var result = Math.ceil(( currentdate.getDay() + 1 + numberOfDays) / 7);
-console.log(`The week number of the current date (${currentdate}) is ${result}.`)
-            </script>
-</div><div class="chart-div">
-  <canvas id="bodyweightChart-year"></canvas>
+            <input type="date" id="week-selector" onchange="getWeightFromWeek()">
+            <p><span>Start Date:<span id="start-date"></span></span> <span>End Date: <span id="end-date"></span></span></p>
+            <canvas id="bodyweightChart-week"></canvas>
+        </div>
+        <div class="chart-div">
+            <canvas id="bodyweightChart-year"></canvas>
+        </div>
     </div>
-    </div>
-<!--    <h1>Exercises</h1>-->
 
 </body>
 </html>

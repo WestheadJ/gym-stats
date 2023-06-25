@@ -1,18 +1,39 @@
 let week;
+let weekChart
+
+function formatDate() {
+    var d = new Date(),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
 
 window.onload = () => {
-
-    fetch("http://127.0.0.1:6001/get/bodyweight/week").then(res => res.json()).then(json => {
+    var date = formatDate(date)
+    document.getElementById("week-selector").value = date
+    fetch(`http://127.0.0.1:6001/get/bodyweight/week?date=${document.getElementById("week-selector").value}`).then(res => res.json()).then(json => {
         let data = []
+
         let labels = ['Mon', "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        json.forEach(item => {
-            // labels.push(item[0])
+        json[0].forEach(item => {
             data.push(item[1])
         })
 
+        let minValueWeight = Math.min(...data)
+        let maxValueWeight = Math.max(...data)
+
         var canvas = document.getElementById('bodyweightChart-week');
         var ctx = canvas.getContext('2d')
-        new Chart(ctx, {
+        weekChart = new Chart(ctx, {
             "data": {
                 "labels": labels,
                 "datasets": [{
@@ -26,13 +47,18 @@ window.onload = () => {
             },
             "type": "line",
             "options": {
-                responsive: true, maintainAspectRatio: false,
-                scales: { y: { type: 'linear', suggestedMin: 65, max: 100, ticks: { stepSize: 5 } } },
+                responsive: true, maintainAspectRatio: true,
+                scales: { y: { type: 'linear', min: Math.round(minValueWeight - 1), max: Math.round(maxValueWeight + 1), ticks: { stepSize: 1 } } },
                 "title": { "text": "Line Chart", "display": true }
             }
         });
-    })
 
+
+        document.getElementById("start-date").innerText = json[1]
+        document.getElementById("end-date").innerText = json[2]
+
+
+    })
     fetch("http://127.0.0.1:6001/get/bodyweight/year").then(res => res.json()).then(json => {
         let data = []
         let labels = []
@@ -63,8 +89,8 @@ window.onload = () => {
             },
             "type": "line",
             "options": {
-                responsive: true, maintainAspectRatio: false,
-                scales: { y: { type: 'linear', suggestedMin: 70, max: 100, ticks: { stepSize: 5 } } },
+                responsive: true, maintainAspectRatio: true,
+                scales: { y: { type: 'linear', min: Math.round(minValueWeight - 1), max: Math.round(maxValueWeight + 1), ticks: { stepSize: 5 } } },
                 "title": { "text": "Line Chart", "display": true }, plugins: {
                     annotation: {
                         annotations: {
@@ -130,5 +156,34 @@ window.onload = () => {
 
     })
 
+
+}
+
+function getWeightFromWeek() {
+    console.log(weekChart.data.datasets[0].data)
+    date = document.getElementById("week-selector").value
+
+    fetch(`http://127.0.0.1:6001/get/bodyweight/week?date=${date}`).then(res => res.json()).then(json => {
+        let data = []
+
+
+        json[0].forEach(item => {
+            // labels.push(item[0])
+            data.push(item[1])
+        })
+
+
+        let minValueWeight = Math.min(...data)
+        let maxValueWeight = Math.max(...data)
+
+        weekChart.data.datasets[0].data = data
+        weekChart.options.scales.y.min = Math.round(minValueWeight) - 1
+        weekChart.options.scales.y.max = Math.round(maxValueWeight) + 1
+
+        weekChart.update()
+
+        document.getElementById("start-date").innerText = json[1]
+        document.getElementById("end-date").innerText = json[2]
+    })
 
 }

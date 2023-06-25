@@ -26,17 +26,12 @@ header>h1{
 
 .chart-div{
     width: 90%;
-    height: 500px;
+    height: 100%;
     padding: 15px;
     border-radius: 15px;
     margin: 15px;
     background-color: #1c2541;
 
-}
-
-bodyweightChart-week{
-        height: auto;
-        width:90%;
 }
 
 #percentage{
