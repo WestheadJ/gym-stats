@@ -83,15 +83,13 @@ def getPercentage():
 @flask_cors.cross_origin()
 def addPostBodyweight():
     weight = request.form["weight"]
+    date = request.form["date"]
     con = sqlite3.connect("stats.db")
     db = con.cursor()
-    dt = pendulum.today().date()
-    db.execute("SELECT * FROM Bodyweight WHERE date = ?", [str(dt)])
+    db.execute("SELECT * FROM Bodyweight WHERE date = ?", [date])
     result = db.fetchall()
     if result == []:
-        db.execute(
-            "INSERT INTO Bodyweight(date,weight) VALUES (?,?)", [str(dt), weight]
-        )
+        db.execute("INSERT INTO Bodyweight(date,weight) VALUES (?,?)", [date, weight])
         con.commit()
         return redirect(url_for("index"))
     else:
