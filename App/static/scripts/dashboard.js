@@ -20,7 +20,7 @@ function formatDate() {
 window.onload = () => {
     var date = formatDate(date)
     document.getElementById("week-selector").value = date
-    fetch(`http://127.0.0.1:6001/get/bodyweight/week?date=${document.getElementById("week-selector").value}`).then(res => res.json()).then(json => {
+    fetch(`http://192.168.1.241:6001/get/bodyweight/week?date=${document.getElementById("week-selector").value}`).then(res => res.json()).then(json => {
         let data = []
 
         let labels = ['Mon', "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -59,7 +59,7 @@ window.onload = () => {
 
 
     })
-    fetch("http://127.0.0.1:6001/get/bodyweight/year").then(res => res.json()).then(json => {
+    fetch("http://192.168.1.241:6001/get/bodyweight/year").then(res => res.json()).then(json => {
         let data = []
         let labels = []
         json.forEach(item => {
@@ -135,7 +135,7 @@ window.onload = () => {
         return (num > 0);
     }
 
-    fetch('http://127.0.0.1:6001/get/percentage').then(res => res.json()).then(res => {
+    fetch('http://192.168.1.241:6001/get/percentage').then(res => res.json()).then(res => {
         const yesterday = res[1][1]
         const today = res[0][1]
 
@@ -163,7 +163,7 @@ function getWeightFromWeek() {
     console.log(weekChart.data.datasets[0].data)
     date = document.getElementById("week-selector").value
 
-    fetch(`http://127.0.0.1:6001/get/bodyweight/week?date=${date}`).then(res => res.json()).then(json => {
+    fetch(`http://192.168.1.241:6001/get/bodyweight/week?date=${date}`).then(res => res.json()).then(json => {
         let data = []
 
 
