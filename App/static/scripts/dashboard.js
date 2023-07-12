@@ -59,6 +59,7 @@ window.onload = () => {
 
 
     })
+
     fetch("http://127.0.0.1:6001/get/bodyweight/year").then(res => res.json()).then(json => {
         let data = []
         let labels = []
