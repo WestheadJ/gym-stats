@@ -37,7 +37,8 @@ def getBodyweightWeek():
     print(startDate, "-", endDate)
 
     db.execute(
-        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ?", [startDate, endDate]
+        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ? ORDER BY date DESC",
+        [startDate, endDate],
     )
     rows = db.fetchall()
     return [rows, startDate, endDate]
@@ -57,7 +58,8 @@ def getBodyweightYear():
     print(startDate, "-", endDate)
 
     db.execute(
-        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ?", [startDate, endDate]
+        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ? ORDER BY date DESC",
+        [startDate, endDate],
     )
     rows = db.fetchall()
     return rows
@@ -72,7 +74,7 @@ def getPercentage():
     yesterday = pendulum.now().subtract(days=1).to_date_string()
 
     db.execute(
-        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ?", [yesterday, today]
+        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ? ", [yesterday, today]
     )
     rows = db.fetchall()
 
@@ -86,7 +88,7 @@ def addPostBodyweight():
     date = request.form["date"]
     con = sqlite3.connect("stats.db")
     db = con.cursor()
-    db.execute("SELECT * FROM Bodyweight WHERE date = ? ORDER BY date DESC", [date])
+    db.execute("SELECT * FROM Bodyweight WHERE date = ? ", [date])
     result = db.fetchall()
     if result == []:
         db.execute("INSERT INTO Bodyweight(date,weight) VALUES (?,?)", [date, weight])
