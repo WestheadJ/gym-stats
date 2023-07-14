@@ -86,7 +86,7 @@ def addPostBodyweight():
     date = request.form["date"]
     con = sqlite3.connect("stats.db")
     db = con.cursor()
-    db.execute("SELECT * FROM Bodyweight WHERE date = ?", [date])
+    db.execute("SELECT * FROM Bodyweight WHERE date = ? ORDER BY date DESC", [date])
     result = db.fetchall()
     if result == []:
         db.execute("INSERT INTO Bodyweight(date,weight) VALUES (?,?)", [date, weight])
