@@ -37,7 +37,7 @@ def getBodyweightWeek():
     print(startDate, "-", endDate)
 
     db.execute(
-        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ? ORDER BY date DESC",
+        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ? ORDER BY date ASC",
         [startDate, endDate],
     )
     rows = db.fetchall()
@@ -58,7 +58,7 @@ def getBodyweightYear():
     print(startDate, "-", endDate)
 
     db.execute(
-        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ? ORDER BY date DESC",
+        f"SELECT * FROM Bodyweight WHERE date BETWEEN ? AND ? ORDER BY date ASC",
         [startDate, endDate],
     )
     rows = db.fetchall()
